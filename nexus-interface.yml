@@ -1,0 +1,31 @@
+---
+- name: set admin state to down Nexus SVI
+  hosts: n7k
+  gather_facts: no
+
+  tasks:
+    - name: decrypt_password_file
+      include_vars: ./n7k-password.yml
+      no_log: true
+    
+    - name: import vlans
+      include_vars: ./vlans.yml
+ 
+    - name: admin_down_svi
+      nxos_interface:  
+        host: "{{inventory_hostname}}"
+        username: "{{username}}"
+        password: "{{password}}"
+        name: "Vlan{{ item }}"
+        admin_state: down
+        transport: cli
+      with_items: "{{ vlans }}"
+
+    - name: save_config
+      nxos_config:
+        host: "{{inventory_hostname}}"
+        username: "{{username}}"
+        password: "{{password}}"
+        transport: cli
+        save_when: modified
+        

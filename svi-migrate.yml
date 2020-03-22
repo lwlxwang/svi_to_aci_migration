@@ -1,0 +1,21 @@
+---
+- name: Shut down SVIs on N7K and bring up unicast routing on ACI
+  hosts: aci, n7k
+  gather_facts: no
+
+  vars:
+    roles_to_include:
+      - nexus-interface
+      - unicast-enable
+
+  tasks:
+  - include_vars: ./vlans.yml
+
+  - include_role: 
+      name: "{{ item.1 }}"
+    vars:
+        vlan: "{{ item.0 }}"
+    loop: "{{ vlans | product(roles_to_include) | list }}"
+
+
+      

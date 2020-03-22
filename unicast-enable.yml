@@ -1,0 +1,24 @@
+---
+- name: enable unicast routing on BD
+  hosts: aci
+  gather_facts: no
+
+  tasks:
+    - name: decrypt_password_file
+      include_vars: ./password.yml
+      no_log: true
+    
+    - name: import vlans
+      include_vars: ./vlans.yml
+
+    - name: enable_unicast
+      aci_bd:  
+        hostname: "{{inventory_hostname}}"
+        username: "{{username}}"
+        password: "{{password}}"
+        validate_certs: no
+        enable_routing: yes
+        bd: "VLAN{{ item }}"
+        tenant: "{{ tenant }}"
+      with_items:
+        - "{{ vlans }}"

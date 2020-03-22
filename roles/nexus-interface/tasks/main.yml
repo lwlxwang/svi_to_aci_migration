@@ -1,0 +1,16 @@
+---
+  - name: decrypt_password_file
+    include_vars: ./n7k-password.yml
+    no_log: true
+    when: "'n7k' in group_names"
+
+  - name: admin_down_svi
+    nxos_interface:  
+      host: "{{inventory_hostname}}"
+      username: "{{username}}"
+      password: "{{password}}"
+      name: "Vlan{{ vlan }}"
+      admin_state: down
+      transport: cli
+    when: "'n7k' in group_names"
+

@@ -1,0 +1,16 @@
+---
+  - name: decrypt_password_file
+    include_vars: ./aci-password.yml
+    no_log: true
+    when: "'aci' in group_names"
+
+  - name: enable_unicast
+    aci_bd:  
+      hostname: "{{inventory_hostname}}"
+      username: "{{username}}"
+      password: "{{password}}"
+      validate_certs: no
+      enable_routing: yes
+      bd: "VLAN{{ vlan }}"
+      tenant: "{{ tenant }}"
+    when: "'aci' in group_names"

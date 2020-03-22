@@ -1,0 +1,5 @@
+[aci]
+10.10.250.55 ansible_connection=local
+
+[n7k]
+10.10.250.7  ansible_connection=local
