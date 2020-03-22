@@ -15,7 +15,7 @@ password: <YOUR PASSWORD>
 ansible-vault encrypt n7k-password.yml
 ansible-vault encrypt aci-password.yml
 ```
-3. Populate the VLANs to be shut down on the Nexus, and unicast-enabled on ACI.  
+3. Populate the VLANs into vlans.yml to be shut down on the Nexus, and unicast-enabled on ACI.  
 Note that this assumes BDs named in the format "VLANX" where X = the VLAN number. 
 
 4. Run the playbook.
